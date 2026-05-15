@@ -10,8 +10,8 @@
 // @grant        GM_addStyle
 // @grant        unsafeWindow
 // @homepage https://github.com/WayneFerdon/HVSinicization
-// @downloadURL https://github.com/WayneFerdon/HVSinicization/raw/refs/heads/main/HVSinicization.js
-// @updateURL https://github.com/WayneFerdon/HVSinicization/raw/refs/heads/main/HVSinicization.js
+// @downloadURL https://github.com/WayneFerdon/HVSinicization/raw/refs/heads/main/HVSinicization.user.js
+// @updateURL https://github.com/WayneFerdon/HVSinicization/raw/refs/heads/main/HVSinicization.user.js
 // ==/UserScript==
 
 // 隐藏原先的战斗 log
