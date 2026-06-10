@@ -1377,14 +1377,14 @@ function start_observe() {
   if (!document.querySelector('#pane_monster')) return;
   let paneMonsterHeight = document.querySelector('#pane_monster').getBoundingClientRect().height;
   const minTop = Math.max(55.6*5-paneMonsterHeight, 0);
-  paneMonsterHeight += 10;
+  paneMonsterHeight += 22;
   container.style.cssText += `display: block; top: ${minTop}px; height: calc(100% - ${paneMonsterHeight+minTop}px); left: -6px; width: 548px; position: relative; overflow: auto;}`;
   textlog.appendChild(container);
   container.appendChild(table);
   document.querySelector('#battle_left').style.cssText += 'width: 681px;';
   const bg = document.createElement('div');
   bg.classList.add('btlbg');
-  bg.style.cssText = "position: fixed; z-index: 1; height: 255px;width: 671px; background-color: #111; padding: 0; margin: 0; top: 47px;";
+  bg.style.cssText = "position: fixed; z-index: 1; height: 255px;width: 671px; padding: 0; margin: 0; top: 47px;";
   document.querySelector('#battle_left').appendChild(bg);
   document.querySelector('#pane_action').style.cssText += 'position: sticky; top: 8px; z-index: 2;';
   document.querySelector('#pane_vitals').style.cssText += 'position: sticky; top: 53px; z-index: 2;';
