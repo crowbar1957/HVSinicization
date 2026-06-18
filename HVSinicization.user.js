@@ -486,7 +486,7 @@ var items = {
         'Binding of the Cheetah':  '粘合剂 敏捷',
         'Binding of the Turtle':  '粘合剂 体质',
         'Binding of the Fox':  '粘合剂 智力',
-        'Binding of the Owl':  '粘合剂 智慧',
+        'Binding of the Owl':  '粘合剂 感知',
         'Binding of the Elementalist':  '粘合剂 元素魔法熟练度',
         'Binding of the Heaven-sent':  '粘合剂 神圣魔法熟练度',
         'Binding of the Demon-fiend':  '粘合剂 黑暗魔法熟练度',
@@ -527,7 +527,7 @@ var items = {
         'Crystal of Swiftness' : '敏捷水晶',
         'Crystal of Fortitude' : '体质水晶',
         'Crystal of Cunning' : '智力水晶',
-        'Crystal of Knowledge' : '智慧水晶',
+        'Crystal of Knowledge' : '感知水晶',
         'Crystal of Flames' : '火焰水晶',
         'Crystal of Frost' : '冰冻水晶',
         'Crystal of Lightning' : '闪电水晶',
@@ -932,7 +932,7 @@ var items = {
         'Agility\\.' : '敏捷',
         'Endurance\\.' : '体质',
         'Intelligence\\.' : '智力',
-        'Wisdom\\.' : '智慧',
+        'Wisdom\\.' : '感知',
         'Fire Resistance' : '火属性抗性',
         'Cold Resistance' : '冰属性抗性',
         'Electrical Resistance' : '电属性抗性',
@@ -1030,7 +1030,7 @@ var items = {
         'Agility' : '(敏捷)',
         'Endurance' : '(体质)',
         'Intelligence' : '(智力)',
-        'Wisdom' : '(智慧)',
+        'Wisdom' : '(感知)',
         'Magical Mitigation' : '(魔法减伤)',
         'Resist Chance' : '(抵抗率)',
         'Physical Crit Chance' : '(物理暴击率)',
@@ -1156,7 +1156,7 @@ var equips = {
         'of the Cheetah' :  '猎豹(敏捷)',
         'of the Turtle' :  '乌龟(体质)',
         'of the Fox' :  '狐狸(智力)',
-        'of the Owl' :  '夜枭(智慧)',
+        'of the Owl' :  '夜枭(感知)',
         'of the Hulk' :  '浩克',
         'of the Shielding Aura' :  '守护光环',
 
@@ -1196,7 +1196,7 @@ var equips = {
         'Cobalt':'<span style=\"background:#a0f4f4;color:black\">钴石的(冰抗)</span>',
         'Ruby':'<span style=\"background:#ffa6a6;color:black\" 红宝石(火抗)</span>',
         'Onyx':'<span style=\"background:#cccccc;color:black\">缟玛瑙(暗抗)</span>',
-        'Savage':'<span style=\"color:red\">残暴的(攻暴伤)</span>',
+        'Savage':'<span style=\"color:red\">残暴的(物暴)</span>',
         'Reinforced':'加固的(减伤)',
         'Shielding':'盾化的(格挡)',
         'Arctic':'<span style=\"background:#94c2f5\;color:black">极寒之(冰)</span>',
@@ -1258,8 +1258,7 @@ let items_words = { ...items, ...equips };
 
 let regexs = [], chinese = [];
 
-let monsterNames = Array.from(gE('div.btm3>div>div', 'all')).map(monster => monster.innerHTML);
-
+let monsterNames = Array.from(document.body.querySelectorAll('div.btm3>div>div')).map(monster => monster.innerHTML);
 
 for (const [key, value] of Object.entries(words)) {
   regexs.push(new RegExp(`(?<=[ ,.\\[]|^)${key}(?=[ ,.\\]]|$)`, 'g'));
@@ -1329,7 +1328,7 @@ function add_to_log(text) {
   log.insertBefore(tr, log.firstChild);
 }
 function handle_log(mutations, _observer) {
-  monsterNames = Array.from(gE('div.btm3>div>div', 'all')).map(monster => monster.innerHTML);
+  monsterNames = Array.from(document.body.querySelectorAll('div.btm3>div>div')).map(monster => monster.innerHTML);
 
   add_to_log('<span style=\"color:#777;\">----------------------------------------------------------------------------------</span>');
   for (const mutation of mutations) {
@@ -1344,18 +1343,6 @@ function handle_log(mutations, _observer) {
       node.childNodes.forEach(n => text.push(n.innerHTML));
       add_to_log(text.join(' '));
     }
-  }
-}
-
-function gE(ele, mode, parent) { // 获取元素
-  if (typeof ele === 'object') {
-    return ele;
-  } if (mode === undefined && parent === undefined) {
-    return (isNaN(ele * 1)) ? document.querySelector(ele) : document.getElementById(ele);
-  } if (mode === 'all') {
-    return (parent === undefined) ? document.querySelectorAll(ele) : parent.querySelectorAll(ele);
-  } if (typeof mode === 'object' && parent === undefined) {
-    return mode.querySelector(ele);
   }
 }
 
