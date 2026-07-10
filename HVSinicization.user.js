@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HV 战斗日志汉化
 // @namespace    Aloxaf_hentai
-// @version      2026.7.g
+// @version      2026.7.h
 // @description  汉化 HV 战斗日志
 // @author       qp_xe & indefined & 1235789gzy1 & mbbdzz 原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
 // @icon         https://hentaiverse.org/y/favicon.png
@@ -25,7 +25,7 @@
         #${translatorID} .effect { background: #c6ffb5; }
         #${translatorID} .debuff { background: #856d00; }
         #${translatorID} .strike { color: #283b2f; }
-        #${translatorID} .attack { color: #ff0000; font-weight: bold; text-decoration: underline;}
+        #${translatorID} .attack { color: #ff0000; background-color: #000000; font-weight: bold; text-decoration: underline;}
         #${translatorID} .crits { color: #ef3aff; font-weight: bold; }
         #${translatorID} .resist { color: #b443ff; }
         #${translatorID} .harm { background: #f1d1d5; font-weight: bold; }
