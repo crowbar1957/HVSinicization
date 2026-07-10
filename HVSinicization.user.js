@@ -542,7 +542,7 @@
     ];
 
     const itemWords = [
-        ["Credits", "Credits", "credits"],
+        ["(\\d+) Credits", "$1 Credits", "credits"],
         
         //药
         ["Refreshment", "灵力长效药", "effect"],
