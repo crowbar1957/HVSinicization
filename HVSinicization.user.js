@@ -32,7 +32,8 @@
         #${translatorID} .crystal { color: #BA05B4; }
         #${translatorID} .collectables { color: #461B7E; }
         #${translatorID} .token { color: #254117; }
-        #${translatorID} .chow { color: #489EFF; }
+        #${translatorID} .monsterItem { color: #489EFF; }
+        #${translatorID} .credits { color: #A89000; }
     `;
 
     const sentences = [
@@ -541,6 +542,8 @@
     ];
 
     const itemWords = [
+        ["Credits", "Credits", "credits"],
+        
         //药
         ["Refreshment", "灵力长效药", "effect"],
         ["Regeneration", "生命长效药", "effect"],
@@ -584,7 +587,7 @@
         ["Scroll of the Gods", "众神卷轴"],
         ["Soul Fragments", "灵魂碎片"],
 
-        ["Monster Chow", "怪物饲料", "chow"],
+        ["Monster Chow", "怪物饲料", "monsterItem"],
         ["Golden Lottery Ticket", "黄金彩票券"],
         ["Binding of Slaughter", "粘合剂 基础物理伤害"],
         ["Binding of Balance", "粘合剂 物理命中率"],
@@ -639,9 +642,9 @@
         ["Crystal of Corruption", "暗黑水晶", "crystal"],
         ["Crystal of Quintessence", "灵魂水晶", "crystal"],
 
-        ["Monster Edibles", "怪物食品"],
-        ["Monster Cuisine", "怪物料理"],
-        ["Happy Pills", "快乐药丸"],
+        ["Monster Edibles", "怪物食品", "monsterItem"],
+        ["Monster Cuisine", "怪物料理", "monsterItem"],
+        ["Happy Pills", "快乐药丸", "monsterItem"],
 
         ["Wispy Catalyst", "纤小 催化剂"],
         ["Diluted Catalyst", "稀释 催化剂"],
