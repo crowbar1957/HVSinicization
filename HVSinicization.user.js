@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         HV 战斗日志汉化
 // @namespace    Aloxaf_hentai
-// @version      2026.7.c
+// @version      2026.7.d
 // @description  汉化 HV 战斗日志
-// @notice       原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
-// @author       qp_xe & indefined & 1235789gzy1 & mbbdzz
+// @author       qp_xe & indefined & 1235789gzy1 & mbbdzz 原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
 // @icon         https://hentaiverse.org/y/favicon.png
-// @include      *://hentaiverse.org/*
-// @include      *://alt.hentaiverse.org/*
+// @match      *://hentaiverse.org/*
+// @match      *://alt.hentaiverse.org/*
 // @grant        GM_addStyle
 // @homepage https://github.com/crowbar1957/HVSinicization
+// @downloadURL https://github.com/crowbar1957/HVSinicization/raw/refs/heads/main/HVSinicization.user.js
 // @updateURL https://github.com/crowbar1957/HVSinicization/raw/refs/heads/main/HVSinicization.user.js
 // ==/UserScript==
 
