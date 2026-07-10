@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HV 战斗日志汉化
 // @namespace    Aloxaf_hentai
-// @version      2026.7.d
+// @version      2026.7.e
 // @description  汉化 HV 战斗日志
 // @author       qp_xe & indefined & 1235789gzy1 & mbbdzz 原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
 // @icon         https://hentaiverse.org/y/favicon.png
@@ -34,6 +34,7 @@
         #${translatorID} .token { color: #254117; }
         #${translatorID} .monsterItem { color: #489EFF; }
         #${translatorID} .credits { color: #A89000; }
+        #${translatorID} .fragments { color: #254117; }
     `;
 
     const sentences = [
@@ -585,7 +586,7 @@
         ["Scroll of Life", "生命卷轴"],
         ["Scroll of Protection", "守护卷轴"],
         ["Scroll of the Gods", "众神卷轴"],
-        ["Soul Fragments", "灵魂碎片"],
+        ["Soul Fragments", "灵魂碎片", "fragments"],
 
         ["Monster Chow", "怪物饲料", "monsterItem"],
         ["Golden Lottery Ticket", "黄金彩票券"],
