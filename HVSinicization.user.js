@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HV 战斗日志汉化
 // @namespace    Aloxaf_hentai
-// @version      2026.7.e
+// @version      2026.7.f
 // @description  汉化 HV 战斗日志
 // @author       qp_xe & indefined & 1235789gzy1 & mbbdzz 原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
 // @icon         https://hentaiverse.org/y/favicon.png
@@ -130,6 +130,7 @@
         ["You do not have a powerup gem", "宝石不存在"],
 
         // 受伤
+        ["(.+) you, causing (\\d+) points", "$1 you, <span class='attack'>造成 $2 点</span>"],
         ["(.+) hits? (.+)", "$1 击中 $2"],
         ["(.+) glances? (.+)", "$1 部分击中 $2"],
         ["(?:causing|for) (\\d+) points", "造成 $1 点"],
@@ -544,8 +545,8 @@
 
     const itemWords = [
         ["(\\d+) Credits", "$1 Credits", "credits"],
-        
-        //药
+
+        // 药
         ["Refreshment", "灵力长效药", "effect"],
         ["Regeneration", "生命长效药", "effect"],
         ["Replenishment", "魔力长效药", "effect"],
@@ -794,6 +795,8 @@
         ["Channeling", "引导", "effect"],
         ["Fleeing", "逃跑", "effect"],
         ["Blessing of the RiddleMaster", "御谜士的祝福", "effect"],
+        ["Defending", "防御", "effect"],
+        ["Focusing", "专注", "effect"],
 
         // 怪物
         ["Vital Theft", "生命汲取", "debuff"],
