@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HV 战斗日志汉化
 // @namespace    Aloxaf_hentai
-// @version      2026.7.a
+// @version      2026.7.b
 // @description  汉化 HV 战斗日志
 // @notice       原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
 // @author       qp_xe & indefined & 1235789gzy1 & mbbdzz
@@ -142,6 +142,7 @@
             "(\\d)x-crit (.+)(?=[.,;])",
             "<span class='crits'>$1 倍暴击</span> $2",
         ],
+        ["from the brink of defeat", "从死亡的边缘复活了", "attack"],
 
         // 应对
         ["(.+) counter (.+)", "$1 <span class='resist'>反击</span> $2"],
@@ -184,7 +185,6 @@
         ["(.+) (parry|parries) the attack(?=[.,;])", "$1 招架了攻击"],
 
         // 抵抗
-
         [
             "(.+) partially resists? the effects of (.+) spell(?=[.,;])",
             "$1 部分抵抗了 $2 状态法术",
@@ -233,9 +233,8 @@
         ["supportive magic proficiency", "增益魔法熟练度"],
         ["A traveling salesmoogle gives", "自动出售后给予了"],
         ["A traveling salesmoogle salvages it into", "自动分解后给予了"],
-        ["plus (.+) for the remains", "外加来自残余的 $1"][
-            ("Arena Token Bonus!", "获得竞技场令牌奖励!")
-        ],
+        ["plus (.+) for the remains", "外加来自残余的 $1"],
+        ["Arena Token Bonus!", "获得竞技场令牌奖励!"],
         ["Battle Clear Bonus!", "获得战斗胜利奖励!"],
         ["Capacitor Level", "电容器（魔力+2%/级）等级"],
         ["Juggernaut Level", "勇士（生命+2%/级）等级"],
@@ -823,7 +822,7 @@
         ["Ether Tap", "魔力回流"],
 
         // 技能
-        ["offhand", '<span style="color:#1E90FF">副手攻击</span>'],
+        ["offhand", "副手攻击"],
         ["Flee", "逃跑"],
         ["Scan", "扫描"],
         ["FUS RO DAH", "龙吼"],
