@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HV 战斗日志汉化
 // @namespace    Aloxaf_hentai
-// @version      2026.7.b
+// @version      2026.7.c
 // @description  汉化 HV 战斗日志
 // @notice       原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
 // @author       qp_xe & indefined & 1235789gzy1 & mbbdzz
@@ -210,7 +210,7 @@
         ["(.+) dropped (.+)", "$1 掉落了 $2"],
         ["(.+) drops a (.+) powerup", "$1 掉落了一颗 $2 道具"],
 
-        ["You gain", "你提升了"],
+        ["You gain", "你得到了"],
         ["You( have)? obtained", "你获得了"],
         ["You are Victorious", "你胜利了"],
         ["have reached Level (\\d+)", "升级至 $1"],
