@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HV 战斗日志汉化
 // @namespace    Aloxaf_hentai
-// @version      2026.7.h
+// @version      2026.7.i
 // @description  汉化 HV 战斗日志
 // @author       qp_xe & indefined & 1235789gzy1 & mbbdzz 原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
 // @icon         https://hentaiverse.org/y/favicon.png
@@ -20,21 +20,24 @@
     const customStyle = ``;
 
     const translatorStyle = `
-        #${translatorID} .you { color: #303030 ; background: #dbedff;  }
+        #${translatorID} .you { color: #303030 ; background: #dbedff; }
         #${translatorID} .monster { background: #d3d3d3; }
         #${translatorID} .effect { background: #c6ffb5; }
-        #${translatorID} .debuff { background: #856d00; }
+        #${translatorID} .debuff { background: #dcb500; }
+        #${translatorID} .state { opacity: 0.75; font-weight: bold; }
         #${translatorID} .strike { color: #283b2f; }
         #${translatorID} .attack { color: #ff0000; background-color: #000000; font-weight: bold; text-decoration: underline;}
         #${translatorID} .crits { color: #ef3aff; font-weight: bold; }
         #${translatorID} .resist { color: #b443ff; }
         #${translatorID} .harm { background: #f1d1d5; font-weight: bold; }
         #${translatorID} .crystal { color: #BA05B4; }
-        #${translatorID} .collectables { color: #461B7E; }
+        #${translatorID} .collectables { color: #0000FF; }
         #${translatorID} .token { color: #254117; }
         #${translatorID} .monsterItem { color: #489EFF; }
         #${translatorID} .credits { color: #A89000; }
         #${translatorID} .fragments { color: #254117; }
+        #${translatorID} .ofc { color: white; background: linear-gradient(to right, #FF0000, #3300CC); font-weight: bold; }
+        #${translatorID} .draught { color: #00B000; font-weight: bold; }
     `;
 
     const sentences = [
@@ -130,7 +133,10 @@
         ["You do not have a powerup gem", "宝石不存在"],
 
         // 受伤
-        ["(.+) you, causing (\\d+) points", "$1 you, <span class='attack'>造成 $2 点</span>"],
+        ["(.+) you, causing (\\d+) points", "$1 you, <span class='attack'>受到 $2 点</span>"],
+        ["(.+) was (.+) for (\\d+)(?: points)?", "$1 被 $2 , 造成 $3 点"],
+        ["(.+) was (.+)", "$1 被 $2"],
+
         ["(.+) hits? (.+)", "$1 击中 $2"],
         ["(.+) glances? (.+)", "$1 部分击中 $2"],
         ["(?:causing|for) (\\d+) points", "造成 $1 点"],
@@ -138,13 +144,7 @@
         ["(.+) crits? (.+?)", "$1 <span class='crits'>暴击</span> $2"],
         ["(?:and )?takes? (\\d+)(?: points)?", "受到 $1 点", "attack"],
 
-        ["(.+) was hits?", "$1 被击中"],
-        ["(.+) was crits?", "$1 被暴击击中"],
-        ["(.+) was (\\d)x-crit", "$1 被 $2倍暴击 击中"],
-        [
-            "(\\d)x-crit (.+)(?=[.,;])",
-            "<span class='crits'>$1 倍暴击</span> $2",
-        ],
+        ["(\\d)x-crit","<span class='crits'>$1 倍暴击</span>",],
         ["from the brink of defeat", "从死亡的边缘复活了", "attack"],
 
         // 应对
@@ -211,12 +211,12 @@
         ["Stop kicking the dead horse", "别再鞭尸啦"],
 
         ["(.+) dropped (.+)", "$1 掉落了 $2"],
-        ["(.+) drops a (.+) powerup", "$1 掉落了一颗 $2 道具"],
+        ["(.+) drops a (.+) powerup", "$1 掉落了一颗 <span class='draught'>$2</span> 道具"],
 
         ["You gain", "你得到了"],
         ["You( have)? obtained", "你获得了"],
         ["You are Victorious", "你胜利了"],
-        ["have reached Level (\\d+)", "升级至 $1"],
+        ["You have reached Level (\\d+)", "你升级至 $1"],
         ["one Mastery Point", "1 技能点"],
         ["the title:", "称号:"],
 
@@ -259,9 +259,9 @@
         ["potential has increased by", "潜经验提升了"],
 
         //武器效果
-        ["Stunned", "眩晕"],
-        ["Bleeding Wound", "流血"],
-        ["Penetrated Armor", "破甲"],
+        ["Stunned", "眩晕", "debuff"],
+        ["Bleeding Wound", "流血", "debuff"],
+        ["Penetrated Armor", "破甲", "debuff"],
         ["Void Strike", "虚空打击", "strike"],
         ["Fire Strike", "火焰打击", "strike"],
         ["Cold Strike", "冰霜打击", "strike"],
@@ -749,7 +749,7 @@
         ["Lesser Capacitor Charm", "次级魔力加成护符"],
         ["Greater Capacitor Charm", "强效魔力加成护符"],
         ["World Seed", "世界种子"],
-        ["Precursor Artifact", "古遗物"],
+        ["Precursor Artifact", "古遗物","collectables"],
         ["ManBearPig Tail", "人熊猪的尾巴(等级2)", "collectables"],
         ["Mithra's Flower", "猫人族的花(等级2)", "collectables"],
         [
@@ -815,13 +815,13 @@
         ["Immobilized", "魔磁网", "debuff"],
 
         //攻击咒语效果
-        ["Searing Skin", "焦灼皮肤"],
-        ["Freezing Limbs", "冰封肢体"],
-        ["explodes", "爆裂"],
-        ["Turbulent Air", "空气湍流"],
-        ["Deep Burns", "深层烧伤"],
-        ["Breached Defense", "防御崩溃"],
-        ["Blunted Attack", "攻击钝化"],
+        ["Searing Skin", "焦灼皮肤", "debuff"],
+        ["Freezing Limbs", "冰封肢体", "debuff"],
+        ["explodes", "爆裂", "debuff"],
+        ["Turbulent Air", "空气湍流", "debuff"],
+        ["Deep Burns", "深层烧伤", "debuff"],
+        ["Breached Defense", "防御崩溃", "debuff"],
+        ["Blunted Attack", "攻击钝化", "debuff"],
 
         //战斗风格
         ["Overwhelming Strikes", "压制打击"],
@@ -831,16 +831,11 @@
         // 技能
         ["offhand", "副手攻击"],
         ["Flee", "逃跑"],
-        ["Scan", "扫描"],
         ["FUS RO DAH", "龙吼"],
         [
             "Orbital Friendship Cannon",
-            `
-            <font color="#FF0000">友</font>
-            <font color="#CC0033">谊</font>
-            <font color="#990066">小</font>
-            <font color="#660099">马</font>
-            <font color="#3300CC">炮</font>`,
+            "友 谊 小 马 炮",
+            "ofc"
         ],
         ["Concussive Strike", "震荡打击"],
         ["Skyward Sword", "天空之剑"],
@@ -898,9 +893,9 @@
         ["Heartseeker", "觅心者"],
 
         //属性
-        ["(of )?health", '<span style="color: #80B440">生命</span>'],
-        ["(of )?magic", '<span style="color: #639AD4">魔力</span>'],
-        ["(of )?spirit", '<span style="color: #D4637A">灵力</span>'],
+        ["(of )?health", '<span style="color: #285000" class="state">生命</span>'],
+        ["(of )?magic", '<span style="color: #0000c8" class="state">魔力</span>'],
+        ["(of )?spirit", '<span style="color: #960000" class="state">灵力</span>'],
 
         // 伤害
         [
@@ -926,7 +921,7 @@
         ],
         [
             "(of )?[Ee]lec damage",
-            '<span style="color: #b6b300">闪电伤害</span>',
+            '<span style="color: #ccac00">闪电伤害</span>',
             "harm",
         ],
         [
@@ -1131,13 +1126,21 @@
         return Element;
     }
 
+    function ScanTranslator(Element) {
+        const temp = document.createElement("tr")
+        temp.innerHTML = Element.innerHTML;
+        return temp;
+    }
+
     function LogProcess(Element) {
         const text = Element.innerText;
         console.debug("rawLog:", text);
 
-        const node = TextTranslator(text);
+        const node = text.trim().startsWith("Scanning ")
+            ? ScanTranslator(Element)
+            : TextTranslator(text);
 
-        if (Element?.firstElementChild.classList.length) {
+        if (node.matches("tr") && Element?.firstElementChild.classList.length) {
             const classList = Element.firstElementChild.classList;
             node?.firstElementChild.classList.add(classList);
 
@@ -1199,7 +1202,7 @@
         defaultLog.parentElement.appendChild(zhTable);
 
         // 添加已存在日志
-        const logs = defaultLog.lastElementChild?.querySelectorAll("tr");
+        const logs = defaultLog.lastElementChild?.children || [];
         [...logs].reverse().forEach((item) => LogProcess(item));
 
         // 结合战斗翻译开关
