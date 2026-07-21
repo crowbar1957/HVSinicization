@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HV 战斗日志汉化
 // @namespace    Aloxaf_hentai
-// @version      2026.7.i
+// @version      2026.7.k
 // @description  汉化 HV 战斗日志
 // @author       qp_xe & indefined & 1235789gzy1 & mbbdzz 原作者@qp_xe，物品汉化文本由HV物品装备汉化提供
 // @icon         https://hentaiverse.org/y/favicon.png
@@ -19,7 +19,7 @@
 
     const customStyle = ``;
 
-    const translatorStyle = `
+    const translatorStyle = /* CSS */ `
         #${translatorID} .you { color: #303030 ; background: #dbedff; }
         #${translatorID} .monster { background: #d3d3d3; }
         #${translatorID} .effect { background: #c6ffb5; }
@@ -77,6 +77,10 @@
             "谜语大师听了你的回答，含糊地哼了一声",
         ],
         [
+            "The Riddlemaster listens to your answer and starts humming a jaunty tune.",
+            "谜语大师听完你的回答后，开始哼起一首欢快的曲调",
+        ],
+        [
             "With the light of a new dawn, [yY]our experience in all things increases",
             "随着新的黎明的到来，你在所有事情上的经验都增加了",
         ],
@@ -103,8 +107,8 @@
         ["You gain no EXP due to exhaustion", "你已精疲力竭，无法获得经验"],
         ["Cooldown expired for (.+)", "$1 已完成冷却"],
         [
-            "(.+) drain (.+) points of health from (.+)(?=[.,;])",
-            "$1 从 $3 身上吸取到 $2 点生命",
+            "(.+) drain (.+) points of health from (.+)",
+            "$1 从 $3 身上吸取到 $2 点 health",
         ],
         ["The effect (.+) was dispelled(?=[.,;])", "效果 $1 已被替换"],
         ["(.+) got knocked out of confuse", "$1 从混乱中脱离"],
@@ -121,6 +125,10 @@
         ["(.+) vigorously whiffs at a shadow", "$1 用力地挥空到影子上"],
         ["(.+) in the general direction of a shadow", "$1 朝向了影子"],
         ["(.+) absorbs (.+) from the attack into", "$1 吸收了 $2 并转化为"],
+        [
+            "(.+) is eviscerated for (\\d+) (.+) damage, putting it out of its misery",
+            "$1 被 $2 点 $3 damage 撕裂，终于解脱了",
+        ],
 
         ["which hits", "命中了"],
         ["which crits", "暴击了"],
@@ -133,10 +141,16 @@
         ["You do not have a powerup gem", "宝石不存在"],
 
         // 受伤
-        ["(.+) you, causing (\\d+) points", "$1 you, <span class='attack'>受到 $2 点</span>"],
+        [
+            "(.+) you, causing (\\d+) points",
+            "$1 you, <span class='attack'>受到 $2 点</span>",
+        ],
         ["(.+) was (.+) for (\\d+)(?: points)?", "$1 被 $2 , 造成 $3 点"],
         ["(.+) was (.+)", "$1 被 $2"],
-
+        [
+            "(.+) hits (.+) for (\\d+) damage(?=[.,;])",
+            "$1 导致 $2 受到 $3 点伤害",
+        ],
         ["(.+) hits? (.+)", "$1 击中 $2"],
         ["(.+) glances? (.+)", "$1 部分击中 $2"],
         ["(?:causing|for) (\\d+) points", "造成 $1 点"],
@@ -144,16 +158,18 @@
         ["(.+) crits? (.+?)", "$1 <span class='crits'>暴击</span> $2"],
         ["(?:and )?takes? (\\d+)(?: points)?", "受到 $1 点", "attack"],
 
-        ["(\\d)x-crit","<span class='crits'>$1 倍暴击</span>",],
+        ["(\\d)x-crit", "<span class='crits'>$1 倍暴击</span>"],
         ["from the brink of defeat", "从死亡的边缘复活了", "attack"],
 
         // 应对
         ["(.+) counter (.+)", "$1 <span class='resist'>反击</span> $2"],
+        ["(.+) has been roused from its sleep", "$1 被惊醒了"],
 
         // 闪避
         ["(.+) evades? the attack from (.+)(?=[.,;])", "$1 闪避了 $2 的攻击"],
         ["(.+) evades? the attack(?=[.,;])", "$1 闪避了攻击"],
         ["(.+) evades? (.+) spell(?=[.,;])", "$1 闪避了 $2 法术"],
+        ["(.+) dodges (.+) attack", "$1 躲避了 $2 的攻击"],
         ["but misses the attack", "但这次攻击没有命中"],
 
         // 格挡招架
@@ -186,7 +202,7 @@
         ],
         ["(.+) partially (parry|parries) the attack", "$1 部分招架攻击"],
         ["(.+) (parry|parries) the attack(?=[.,;])", "$1 招架了攻击"],
-
+        ["(.+) (parry|parries) (.+) attack(?=[.,;])", "$1 招架了 $2 的攻击"],
         // 抵抗
         [
             "(.+) partially resists? the effects of (.+) spell(?=[.,;])",
@@ -209,9 +225,14 @@
         ["(.+) ha(?:ve|s) been defeated", "$1 被击败了"],
         ["have escaped from the battle", "从战斗中脱离了"],
         ["Stop kicking the dead horse", "别再鞭尸啦"],
+        ["Stop beating dead ponies", "别再鞭尸啦"],
+        ["Arena Extra Bonus", "竞技场额外奖励"],
 
         ["(.+) dropped (.+)", "$1 掉落了 $2"],
-        ["(.+) drops a (.+) powerup", "$1 掉落了一颗 <span class='draught'>$2</span> 道具"],
+        [
+            "(.+) drops a (.+) powerup",
+            "$1 掉落了一颗 <span class='draught'>$2</span> 道具",
+        ],
 
         ["You gain", "你得到了"],
         ["You( have)? obtained", "你获得了"],
@@ -219,6 +240,14 @@
         ["You have reached Level (\\d+)", "你升级至 $1"],
         ["one Mastery Point", "1 技能点"],
         ["the title:", "称号:"],
+        [
+            "Your (.+) is damaged, and should be repaired soon(?=[.,;])",
+            "你的 $1 已受损, 应尽快修理",
+        ],
+        [
+            "(.+) on your (.+) is wearing out, and should be replaced(?=[.,;])",
+            "你的 $2 上的 $1 效果即将消失, 应更换",
+        ],
 
         ["one-handed weapon proficiency", "单手武器的熟练度"],
         ["two-handed weapon proficiency", "双手武器的熟练度"],
@@ -271,6 +300,12 @@
         ["Dark Strike", "黑暗打击", "strike"],
         ["spike shield", "刺盾", "strike"],
         ["[sS]pirit [sS]hield", "灵力盾", "strike"],
+
+        //特殊
+        ["Fury of the Sisters", "姊妹们的盛怒"],
+        ["Lamentations of the Future", "未来的悲叹"],
+        ["Screams of the Past", "昔日的凄叫"],
+        ["Wails of the Present", "此刻的恸哭"],
     ];
 
     const equipsWords = [
@@ -749,7 +784,7 @@
         ["Lesser Capacitor Charm", "次级魔力加成护符"],
         ["Greater Capacitor Charm", "强效魔力加成护符"],
         ["World Seed", "世界种子"],
-        ["Precursor Artifact", "古遗物","collectables"],
+        ["Precursor Artifact", "古遗物", "collectables"],
         ["ManBearPig Tail", "人熊猪的尾巴(等级2)", "collectables"],
         ["Mithra's Flower", "猫人族的花(等级2)", "collectables"],
         [
@@ -832,11 +867,7 @@
         ["offhand", "副手攻击"],
         ["Flee", "逃跑"],
         ["FUS RO DAH", "龙吼"],
-        [
-            "Orbital Friendship Cannon",
-            "友 谊 小 马 炮",
-            "ofc"
-        ],
+        ["Orbital Friendship Cannon", "友 谊 小 马 炮", "ofc"],
         ["Concussive Strike", "震荡打击"],
         ["Skyward Sword", "天空之剑"],
         ["Frenzied Blows", "狂乱百裂斩"],
@@ -893,9 +924,18 @@
         ["Heartseeker", "觅心者"],
 
         //属性
-        ["(of )?health", '<span style="color: #285000" class="state">生命</span>'],
-        ["(of )?magic", '<span style="color: #0000c8" class="state">魔力</span>'],
-        ["(of )?spirit", '<span style="color: #960000" class="state">灵力</span>'],
+        [
+            "(of )?health",
+            '<span style="color: #285000" class="state">生命</span>',
+        ],
+        [
+            "(of )?magic",
+            '<span style="color: #0000c8" class="state">魔力</span>',
+        ],
+        [
+            "(of )?spirit",
+            '<span style="color: #960000" class="state">灵力</span>',
+        ],
 
         // 伤害
         [
@@ -960,7 +1000,7 @@
         ["potential", ': "潜能:'],
     ];
 
-    const RunData = {
+    const runtimeState = {
         _defaultLog: null,
         _translator: null,
 
@@ -969,7 +1009,7 @@
                 return this._defaultLog;
             }
 
-            const defaultLog = document.querySelector(`#${defaultLogID}`);
+            const defaultLog = document.getElementById(defaultLogID);
             if (!defaultLog) {
                 throw Error("无法读取到原始日志");
             }
@@ -977,8 +1017,8 @@
             return defaultLog;
         },
 
-        set defaultLog(Element) {
-            this._defaultLog = Element;
+        set defaultLog(element) {
+            this._defaultLog = element;
         },
 
         get translator() {
@@ -986,7 +1026,7 @@
                 return this._translator;
             }
 
-            const translator = document.querySelector(`#${translatorID}`);
+            const translator = document.getElementById(translatorID);
             if (!translator) {
                 throw Error("无法获取到翻译日志");
             }
@@ -994,50 +1034,51 @@
             return translator;
         },
 
-        set translator(Element) {
-            this._translator = Element;
+        set translator(element) {
+            this._translator = element;
         },
 
-        monster: new Set(),
+        monsterNames: new Set(),
     };
 
-    function addStyle() {
-        const styleConfig = {
-            default: `#mainpane #${defaultLogID} { display: none;}`,
-            translator: translatorStyle,
-            custom: customStyle,
-        };
-        for (const key in styleConfig) {
-            GM_addStyle(styleConfig[key]);
+    function installStyles() {
+        const styles = [
+            `#mainpane #${defaultLogID} { display: none;}`,
+            translatorStyle,
+            customStyle,
+        ];
+
+        for (const style of styles) {
+            GM_addStyle(style);
         }
     }
 
-    function monsterTranslator(text) {
-        let newText = text;
+    function translateMonsterNames(text) {
+        let translatedText = text;
 
         if (text.startsWith("Spawned Monster")) {
             text.matchAll(
                 /^(Spawned Monster .*:) (.*) \(([\w\s-_]+)\) (LV=\d+) (HP=\d+)/g
-            ).forEach((matchs) => {
-                RunData.monster.add(matchs[3]);
-                newText = `${matchs[1]} ${matchs[4]} ${matchs[5]} ${matchs[2]} (${matchs[3]})`;
+            ).forEach((match) => {
+                runtimeState.monsterNames.add(match[3]);
+                translatedText = `${match[1]} ${match[4]} ${match[5]} ${match[2]} (${match[3]})`;
             });
         }
 
-        if (RunData.monster.size == 0) {
+        if (runtimeState.monsterNames.size === 0) {
             document
                 .querySelectorAll("#pane_monster .btm3")
                 .forEach((element) => {
-                    RunData.monster.add(element.innerText);
+                    runtimeState.monsterNames.add(element.innerText);
                 });
-            if (RunData.monster.size != 0) {
-                return monsterTranslator(text);
+            if (runtimeState.monsterNames.size != 0) {
+                return translateMonsterNames(text);
             }
         }
 
-        for (const [name, _] of RunData.monster.entries()) {
+        for (const name of runtimeState.monsterNames) {
             if (text.search(name) > -1) {
-                newText = newText.replace(
+                translatedText = translatedText.replace(
                     name,
                     `<span class="monster">${name}</span>`
                 );
@@ -1045,214 +1086,186 @@
             }
         }
 
-        return newText;
+        return translatedText;
     }
 
-    function Translator(text, regList) {
-        let newText = text;
-        for (const [regText, trText, ...style] of regList) {
-            const classText = style.join(" ");
-            newText = newText.replaceAll(
-                new RegExp(regText, "g"),
-                classText
-                    ? `<span class="${classText}">${trText}</span>`
-                    : trText
+    function applyTranslationRules(text, rules) {
+        let translatedText = text;
+
+        for (const [pattern, replacement, ...classNames] of rules) {
+            const className = classNames.join(" ");
+            translatedText = translatedText.replaceAll(
+                new RegExp(pattern, "g"),
+                className
+                    ? `<span class="${className}">${replacement}</span>`
+                    : replacement
             );
         }
 
-        return newText;
+        return translatedText;
     }
 
-    function equipsTranslator(text) {
-        if (!text.match(/\[.+\]/)) {
+    function protectMonsterNames(rules) {
+        return rules.map(([pattern, ...replacement]) => [
+            `(?<!<span class="monster">[^<]{0,99})${pattern}`,
+            ...replacement,
+        ]);
+    }
+    function translateEquipment(text) {
+        if (!/\[.+\]/.test(text)) {
             return text;
         }
 
-        return Translator(
-            text,
-            equipsWords.map((arr) => {
-                const [regText, ..._] = arr;
-                return [
-                    `(?<!<span class="monster">[^<]{0,99})${regText}`,
-                    ..._,
-                ];
-            })
-        );
+        return applyTranslationRules(text, protectMonsterNames(equipsWords));
     }
 
-    function itemsTranslator(text) {
-        return Translator(
-            text,
-            itemWords.map((arr) => {
-                const [regText, ..._] = arr;
-                return [
-                    `(?<!<span class="monster">[^<]{0,99})${regText}`,
-                    ..._,
-                ];
-            })
-        );
+    function translateItems(text) {
+        return applyTranslationRules(text, protectMonsterNames(itemWords));
     }
 
-    function wordsTranslator(text) {
-        return Translator(
-            text,
-            baseWords.map((arr) => {
-                const [regText, ..._] = arr;
-                return [
-                    `(?<!<span class="monster">[^<]{0,99})${regText}`,
-                    ..._,
-                ];
-            })
-        );
+    function translateWords(text) {
+        return applyTranslationRules(text, protectMonsterNames(baseWords));
     }
 
-    function sentenceTranslator(text) {
-        return Translator(text, sentences);
+    function translateSentences(text) {
+        return applyTranslationRules(text, sentences);
     }
 
-    function TextTranslator(text) {
-        const translatorText = text
-            ? [
-                  monsterTranslator,
-                  sentenceTranslator,
-                  itemsTranslator,
-                  equipsTranslator,
-                  wordsTranslator,
-              ].reduce((Text, func) => func(Text), text)
+    function createTranslatedRow(text) {
+        const translationPipeline = [
+            translateMonsterNames,
+            translateSentences,
+            translateItems,
+            translateEquipment,
+            translateWords,
+        ];
+
+        const translatedText = text
+            ? translationPipeline.reduce(
+                  (currentText, translate) => translate(currentText),
+                  text
+              )
             : text;
 
-        const Element = document.createElement("tr");
-        Element.innerHTML = `<td>${translatorText}</td>`;
-        return Element;
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${translatedText}</td>`;
+        return row;
     }
 
-    function ScanTranslator(Element) {
-        const temp = document.createElement("tr")
-        temp.innerHTML = Element.innerHTML;
-        return temp;
-    }
+    function prependTranslatedRow(sourceRow) {
+        function cloneScanRow(sourceRow) {
+            const row = document.createElement("tr");
+            row.innerHTML = sourceRow.innerHTML;
+            return row;
+        }
 
-    function LogProcess(Element) {
-        const text = Element.innerText;
-        console.debug("rawLog:", text);
+        const text = sourceRow.innerText;
+        // console.debug("rawLog:", text);
 
-        const node = text.trim().startsWith("Scanning ")
-            ? ScanTranslator(Element)
-            : TextTranslator(text);
+        const translatedRow = text.trim().startsWith("Scanning ")
+            ? cloneScanRow(sourceRow)
+            : createTranslatedRow(text);
+        const sourceCell = sourceRow.firstElementChild;
+        const translatedCell = translatedRow.firstElementChild;
 
-        if (node.matches("tr") && Element?.firstElementChild.classList.length) {
-            const classList = Element.firstElementChild.classList;
-            node?.firstElementChild.classList.add(classList);
+        if (sourceCell?.classList.length && translatedRow.matches("tr")) {
+            translatedCell.classList.add(...sourceCell.classList);
 
-            if (
-                text === "" &&
-                classList.contains("tls") &&
-                node.firstElementChild
-            ) {
-                node.firstElementChild.textContent = "---";
+            if (text === "" && sourceCell.classList.contains("tls")) {
+                translatedCell.textContent = "---";
             }
         }
 
-        const translatorBody = RunData.translator.firstElementChild;
-        translatorBody.insertBefore(node, translatorBody.firstElementChild);
+        const translatorBody = runtimeState.translator.firstElementChild;
+        translatorBody.insertBefore(
+            translatedRow,
+            translatorBody.firstElementChild
+        );
     }
 
-    function LogRemove() {
-        const translatorBody = RunData.translator.firstElementChild;
-        translatorBody.lastElementChild?.remove();
-    }
-
-    function obs_Log() {
-        function checkNode(node) {
-            if (node.nodeType != Node.ELEMENT_NODE) {
-                return false;
-            }
-            if (!(node instanceof Element)) {
-                return false;
-            }
-
-            if (!node.matches("tr")) {
-                return false;
-            }
-            return true;
+    function observeLogChanges(defaultLog) {
+        function isLogRow(node) {
+            return (
+                node.nodeType === Node.ELEMENT_NODE &&
+                node instanceof Element &&
+                node.matches("tr")
+            );
         }
 
-        const defaultLog = RunData.defaultLog;
-        const obs = new MutationObserver((mutationList) => {
+        function removeOldestTranslatedRow() {
+            const translatorBody = runtimeState.translator.firstElementChild;
+            translatorBody.lastElementChild?.remove();
+        }
+
+        const observer = new MutationObserver((mutationList) => {
             for (const mutation of mutationList) {
                 for (const node of mutation.addedNodes) {
-                    if (checkNode(node)) {
-                        LogProcess(node);
+                    if (isLogRow(node)) {
+                        prependTranslatedRow(node);
                     }
                 }
                 for (const node of mutation.removedNodes) {
-                    if (checkNode(node)) {
-                        LogRemove();
+                    if (isLogRow(node)) {
+                        removeOldestTranslatedRow();
                     }
                 }
             }
         });
-        obs.observe(defaultLog.lastElementChild, { childList: true });
 
-        const zhTable = document.createElement("table");
-        const zhLog = document.createElement("tbody");
+        observer.observe(defaultLog.lastElementChild, { childList: true });
+    }
 
-        zhTable.id = translatorID;
-        zhTable.appendChild(zhLog);
-        defaultLog.parentElement.appendChild(zhTable);
+    function createTranslatedLog(defaultLog) {
+        const translatedTable = document.createElement("table");
+        const translatedBody = document.createElement("tbody");
 
-        // 添加已存在日志
-        const logs = defaultLog.lastElementChild?.children || [];
-        [...logs].reverse().forEach((item) => LogProcess(item));
+        translatedTable.id = translatorID;
+        translatedTable.appendChild(translatedBody);
+        defaultLog.parentElement.appendChild(translatedTable);
+        runtimeState.translator = translatedTable;
 
-        // 结合战斗翻译开关
-        document.addEventListener("dblclick", function (ev) {
-            if (ev.target && ev.target.id == "infopane") {
-                const currentDisplay =
-                    window.getComputedStyle(defaultLog).display;
-                defaultLog.style.display =
-                    currentDisplay === "none" ? "block" : "";
+        return translatedTable;
+    }
 
-                const zhTableDisplay = window.getComputedStyle(zhTable).display;
-                zhTable.style.display =
-                    zhTableDisplay === "none" ? "block" : "none";
+    function bindLogVisibilityToggle(defaultLog, translatedTable) {
+        document.addEventListener("dblclick", (event) => {
+            if (event.target?.id !== "infopane") {
+                return;
             }
+
+            const defaultLogDisplay =
+                window.getComputedStyle(defaultLog).display;
+            defaultLog.style.display =
+                defaultLogDisplay === "none" ? "block" : "";
+
+            const translatedLogDisplay =
+                window.getComputedStyle(translatedTable).display;
+            translatedTable.style.display =
+                translatedLogDisplay === "none" ? "block" : "none";
         });
     }
 
-    function initDefaultLog(func) {
-        const log = document.querySelector(`#${defaultLogID}`);
+    function initializeLogTranslation() {
+        const defaultLog = runtimeState.defaultLog;
+
+        observeLogChanges(defaultLog);
+        const translatedTable = createTranslatedLog(defaultLog);
+
+        const existingRows = defaultLog.lastElementChild?.children || [];
+        [...existingRows].reverse().forEach(prependTranslatedRow);
+
+        bindLogVisibilityToggle(defaultLog, translatedTable);
+    }
+
+    function whenDefaultLogReady(callback) {
+        const log = document.getElementById(defaultLogID);
         if (log) {
-            RunData.defaultLog = log;
-            func();
+            runtimeState.defaultLog = log;
+            callback();
             return;
         }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const obs = new MutationObserver((mutationList) => {
-                for (const mutation of mutationList) {
-                    for (const node of mutation.addedNodes) {
-                        if (node.nodeType != Node.ELEMENT_NODE) {
-                            continue;
-                        }
-                        if (!(node instanceof Element)) {
-                            continue;
-                        }
-
-                        if (node.id === defaultLogID) {
-                            RunData.defaultLog = node;
-                            obs.disconnect();
-                            func();
-                            return;
-                        }
-                    }
-                }
-            });
-
-            obs.observe(document, { childList: true, subtree: true });
-        });
     }
 
-    addStyle();
-    initDefaultLog(obs_Log);
+    installStyles();
+    whenDefaultLogReady(initializeLogTranslation);
 })();
